@@ -1,0 +1,2 @@
+# index_global_single
+index_global_single
