@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global SM Companies Map</title>
+    <title>Global SM Companies Status</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -31,7 +31,7 @@
         }
         
         .sidebar {
-            width: 350px;
+            width: 380px;
             background: white;
             overflow-y: auto;
             box-shadow: -2px 0 10px rgba(0,0,0,0.1);
@@ -40,13 +40,18 @@
         #header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 20px;
+            padding: 20px;
         }
         
         #header h1 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 600;
-            margin: 0;
+            margin: 0 0 5px 0;
+        }
+        
+        #header .subtitle {
+            font-size: 12px;
+            opacity: 0.9;
         }
         
         #map {
@@ -60,19 +65,20 @@
         }
         
         .stats-section h3 {
-            font-size: 14px;
+            font-size: 13px;
             color: #667eea;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
         
         .stat-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 15px;
-            margin-bottom: 8px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
             border-radius: 8px;
             background: #f8f9fa;
             cursor: pointer;
@@ -87,26 +93,32 @@
         .stat-label {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 14px;
+            gap: 8px;
+            font-size: 13px;
             color: #333;
         }
         
         .stat-color {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
         }
         
         .stat-number {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: #667eea;
         }
         
+        .stat-detail {
+            font-size: 11px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
         /* 하위 목록 */
         .sub-items {
-            margin-left: 26px;
+            margin-left: 22px;
             margin-top: 5px;
             display: none;
         }
@@ -116,12 +128,12 @@
         }
         
         .sub-item {
-            padding: 8px 12px;
-            margin-bottom: 5px;
+            padding: 7px 10px;
+            margin-bottom: 4px;
             border-radius: 6px;
             background: #fff;
             border: 1px solid #e9ecef;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -135,17 +147,17 @@
         .sub-item-name {
             font-weight: 500;
             color: #333;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
         
         .sub-item-detail {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
         }
         
         .expand-icon {
             margin-left: 5px;
-            font-size: 10px;
+            font-size: 9px;
             transition: transform 0.3s ease;
         }
         
@@ -153,24 +165,52 @@
             transform: rotate(180deg);
         }
         
+        /* Capacity 표시 */
+        .capacity-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .capacity-title {
+            font-size: 11px;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .capacity-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .capacity-unit {
+            font-size: 12px;
+            color: #666;
+            margin-left: 5px;
+        }
+        
         .legend-section {
             padding: 20px;
         }
         
         .legend-section h3 {
-            font-size: 14px;
+            font-size: 13px;
             color: #667eea;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-weight: 600;
         }
         
         .legend-item {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
-            font-size: 13px;
-            padding: 8px 12px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            padding: 6px 10px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -181,29 +221,29 @@
         }
         
         .legend-marker {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-right: 8px;
         }
         
         .size-legend {
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid #eee;
         }
         
         .size-item {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
-            font-size: 12px;
+            margin-bottom: 6px;
+            font-size: 11px;
         }
         
         .size-circle {
             border-radius: 50%;
             background: #667eea;
-            margin-right: 10px;
+            margin-right: 8px;
         }
         
         /* 마커 스타일 */
@@ -265,7 +305,8 @@
     <div class="container">
         <div class="map-section">
             <div id="header">
-                <h1>🌍 Global SM Production Companies</h1>
+                <h1>Global SM Companies Status</h1>
+                <div class="subtitle">Made by LAM</div>
             </div>
             <div id="map"></div>
         </div>
@@ -273,9 +314,26 @@
         <div class="sidebar">
             <div class="stats-section">
                 <h3>📊 Statistics</h3>
-                <div class="stat-item">
+                <div class="stat-item" onclick="resetMapView()">
                     <span class="stat-label">Total Companies</span>
                     <span class="stat-number" id="total-count">0</span>
+                </div>
+                
+                <div class="capacity-box">
+                    <div class="capacity-title">Total Capacity</div>
+                    <div>
+                        <span class="capacity-value" id="total-capacity">0</span>
+                        <span class="capacity-unit">kt/year</span>
+                    </div>
+                </div>
+                
+                <div class="capacity-box" style="background: #ff6b6b15;">
+                    <div class="capacity-title">Maintenance Loss Rate</div>
+                    <div>
+                        <span class="capacity-value" id="loss-rate" style="color: #ff6b6b;">0</span>
+                        <span class="capacity-unit">%</span>
+                    </div>
+                    <div class="stat-detail" id="loss-detail">Loss: 0 kt</div>
                 </div>
                 
                 <div class="stat-item" onclick="toggleSubItems('current')">
@@ -299,58 +357,84 @@
             
             <div class="stats-section">
                 <h3>🌍 Regions</h3>
+                
                 <div class="stat-item" onclick="toggleSubItems('asia')">
-                    <span class="stat-label">
-                        <span class="stat-color" style="background-color: #FF6B6B;"></span>
-                        Asia
-                        <span class="expand-icon" id="asia-icon">▼</span>
-                    </span>
+                    <div style="flex: 1;">
+                        <div class="stat-label">
+                            <span class="stat-color" style="background-color: #FF6B6B;"></span>
+                            Asia
+                            <span class="expand-icon" id="asia-icon">▼</span>
+                        </div>
+                        <div class="stat-detail" id="asia-capacity">0 kt/year</div>
+                    </div>
                     <span class="stat-number" id="asia-count">0</span>
                 </div>
                 <div class="sub-items" id="asia-sub">
                     <div class="sub-item" onclick="flyToCountry('china')">
-                        🇨🇳 China (<span id="china-count">0</span>)
+                        <div class="sub-item-name">🇨🇳 China (<span id="china-count">0</span>)</div>
+                        <div class="sub-item-detail" id="china-capacity">0 kt/year</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('japan')">
-                        🇯🇵 Japan (<span id="japan-count">0</span>)
+                        <div class="sub-item-name">🇯🇵 Japan (<span id="japan-count">0</span>)</div>
+                        <div class="sub-item-detail" id="japan-capacity">0 kt/year</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('korea')">
-                        🇰🇷 Korea (<span id="korea-count">0</span>)
+                        <div class="sub-item-name">🇰🇷 Korea (<span id="korea-count">0</span>)</div>
+                        <div class="sub-item-detail" id="korea-capacity">0 kt/year</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('taiwan')">
-                        🇹🇼 Taiwan (<span id="taiwan-count">0</span>)
+                        <div class="sub-item-name">🇹🇼 Taiwan (<span id="taiwan-count">0</span>)</div>
+                        <div class="sub-item-detail" id="taiwan-capacity">0 kt/year</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('sea')">
-                        🌏 SEA (<span id="sea-count">0</span>)
+                        <div class="sub-item-name">🌏 SEA (<span id="sea-count">0</span>)</div>
+                        <div class="sub-item-detail" id="sea-capacity">0 kt/year</div>
                     </div>
                 </div>
                 
                 <div class="stat-item" onclick="flyToRegion('americas')">
-                    <span class="stat-label">
-                        <span class="stat-color" style="background-color: #95E1D3;"></span>
-                        Americas
-                    </span>
+                    <div style="flex: 1;">
+                        <div class="stat-label">
+                            <span class="stat-color" style="background-color: #95E1D3;"></span>
+                            Americas
+                        </div>
+                        <div class="stat-detail" id="americas-capacity">0 kt/year</div>
+                    </div>
                     <span class="stat-number" id="americas-count">0</span>
                 </div>
-                <div class="stat-item" onclick="flyToRegion('europe')">
-                    <span class="stat-label">
-                        <span class="stat-color" style="background-color: #4ECDC4;"></span>
-                        Europe
-                    </span>
+                
+                <div class="stat-item" onclick="toggleSubItems('europe')">
+                    <div style="flex: 1;">
+                        <div class="stat-label">
+                            <span class="stat-color" style="background-color: #4ECDC4;"></span>
+                            Europe
+                            <span class="expand-icon" id="europe-icon">▼</span>
+                        </div>
+                        <div class="stat-detail" id="europe-capacity">0 kt/year</div>
+                    </div>
                     <span class="stat-number" id="europe-count">0</span>
                 </div>
+                <div class="sub-items" id="europe-sub"></div>
+                
                 <div class="stat-item" onclick="flyToRegion('middleeast')">
-                    <span class="stat-label">
-                        <span class="stat-color" style="background-color: #FFB84D;"></span>
-                        Middle East
-                    </span>
+                    <div style="flex: 1;">
+                        <div class="stat-label">
+                            <span class="stat-color" style="background-color: #FFB84D;"></span>
+                            Middle East
+                        </div>
+                        <div class="stat-detail" id="me-capacity">0 kt/year</div>
+                    </div>
                     <span class="stat-number" id="me-count">0</span>
                 </div>
+                
                 <div class="stat-item" onclick="flyToRegion('russia')">
-                    <span class="stat-label">
-                        <span class="stat-color" style="background-color: #C7CEEA;"></span>
-                        Russia
-                    </span>
+                    <div style="flex: 1;">
+                        <div class="stat-label">
+                            <span class="stat-color" style="background-color: #C7CEEA;"></span>
+                            Russia
+                        </div>
+                        <div class="stat-detail" id="russia-capacity">0 kt/year</div>
+                    </div>
                     <span class="stat-number" id="russia-count">0</span>
                 </div>
             </div>
@@ -359,15 +443,15 @@
                 <h3>📍 Status</h3>
                 <div class="legend-item" onclick="showMaintenanceMarkers('current')">
                     <div class="legend-marker" style="background-color: black;"></div>
-                    <span>Current Maintenance (Feb)</span>
+                    <span>Current Maintenance</span>
                 </div>
                 <div class="legend-item" onclick="showMaintenanceMarkers('future')">
                     <div class="legend-marker" style="background-color: #4169E1; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
-                    <span>Future Maintenance (Mar+)</span>
+                    <span>Future Maintenance</span>
                 </div>
                 
                 <div class="size-legend">
-                    <h3 style="margin-bottom: 10px;">📏 Capacity</h3>
+                    <h3 style="margin-bottom: 8px;">📏 Capacity</h3>
                     <div class="size-item">
                         <div class="size-circle" style="width: 10px; height: 10px;"></div>
                         <span>0-100 kt</span>
@@ -400,116 +484,150 @@
         let currentMaintenanceList = [];
         let futureMaintenanceList = [];
         
+        // Capacity 및 Loss 계산용
+        const monthDays = {
+            '1월': 31, '2월': 28, '3월': 31, '4월': 30, '5월': 31, '6월': 30,
+            '7월': 31, '8월': 31, '9월': 30, '10월': 31, '11월': 30, '12월': 31
+        };
+        
         // 데이터 (HTML에 직접 포함)
         clusters = [{"lat": 32.9234, "lng": 115.8456, "location": "Fuyang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Anhui Haoyuan Chemical Group Co., Ltd.", "location": "Fuyang", "capacity": 260, "maintenance": "없음", "is_current_maintenance": false, "lat": 32.9234, "lng": 115.8456, "has_future_maintenance": false, "precise_address": "No.1 Yuanfeng Road, Yingdong Economic Development Zone", "marker_size": 14}]}, {"lat": 32.6789, "lng": 117.0234, "location": "Huainan", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Anhui Jiaxi New Material Technology Co., Ltd.", "location": "Huainan", "capacity": 350, "maintenance": "없음", "is_current_maintenance": false, "lat": 32.6789, "lng": 117.0234, "has_future_maintenance": false, "precise_address": "Coal Chemical Avenue, Panji Modern Coal Chemical Park", "marker_size": 18}]}, {"lat": 40.9234, "lng": 121.9567, "location": "Panjin", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": true, "companies": [{"country": "CHINA (MAINLAND)", "company": "Bora LyondellBasell Petrochemical Co Ltd", "location": "Panjin", "capacity": 350, "maintenance": "12월", "is_current_maintenance": false, "lat": 40.9234, "lng": 121.9567, "has_future_maintenance": true, "precise_address": "Binhai Road, Liaodong Bay New District", "marker_size": 18}]}, {"lat": 41.0234, "lng": 122.1234, "location": "Panjin", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Panjin Ethylene Co., Ltd.", "location": "Panjin", "capacity": 195, "maintenance": "없음", "is_current_maintenance": false, "lat": 41.0234, "lng": 122.1234, "has_future_maintenance": false, "precise_address": "Xiuyuan Road, Shuangtaizi District Petrochemical Park", "marker_size": 14}]}, {"lat": 45.58, "lng": 84.87, "location": "Karamay", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "China Petroleum Engineering Co Ltd", "location": "Karamay", "capacity": 40, "maintenance": "없음", "is_current_maintenance": false, "lat": 45.58, "lng": 84.87, "has_future_maintenance": false, "marker_size": 10}, {"country": "CHINA (MAINLAND)", "company": "PetroChina Dushanzi Petrochemical Co", "location": "Karamay", "capacity": 360, "maintenance": "없음", "is_current_maintenance": false, "lat": 45.58, "lng": 84.87, "has_future_maintenance": false, "marker_size": 18}]}, {"lat": 22.7234, "lng": 114.6234, "location": "Huizhou", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "CNOOC and Shell Petrochemicals Co Ltd (CSPC)", "location": "Huizhou", "capacity": 637, "maintenance": "없음", "is_current_maintenance": false, "lat": 22.7234, "lng": 114.6234, "has_future_maintenance": false, "precise_address": "North 1st Road, Daya Bay Petrochemical Industrial Park", "marker_size": 24}, {"country": "CHINA (MAINLAND)", "company": "CNOOC and Shell Petrochemicals Co Ltd (CSPC)", "location": "Huizhou", "capacity": 650, "maintenance": "없음", "is_current_maintenance": false, "lat": 22.7234, "lng": 114.6234, "has_future_maintenance": false, "precise_address": "North 1st Road, Daya Bay Petrochemical Industrial Park", "marker_size": 24}]}, {"lat": 19.1, "lng": 108.65, "location": "Dongfang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "CNOOC Dongfang Petrochemical Co., Ltd.", "location": "Dongfang", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 19.1, "lng": 108.65, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 29.8234, "lng": 121.7456, "location": "Ningbo", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Cnooc Ningbo Daxie Petrochemical Co Ltd", "location": "Ningbo", "capacity": 280, "maintenance": "없음", "is_current_maintenance": false, "lat": 29.8234, "lng": 121.7456, "has_future_maintenance": false, "precise_address": "Binhai West Road, Daxie Development Zone", "marker_size": 14}]}, {"lat": 29.8923, "lng": 121.7234, "location": "Ningbo", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Ningbo Huatai Shengfu Polymeric Materials Co., Ltd.", "location": "Ningbo", "capacity": 400, "maintenance": "없음", "is_current_maintenance": false, "lat": 29.8923, "lng": 121.7234, "has_future_maintenance": false, "precise_address": "Hai Tong Road, Xiepu Town, Ningbo Petrochemical ETD", "marker_size": 18}]}, {"lat": 29.8945, "lng": 121.7267, "location": "Ningbo", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Ningbo Keyuan Refining Co., Ltd.", "location": "Ningbo", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 29.8945, "lng": 121.7267, "has_future_maintenance": false, "precise_address": "Binhai Road, Xiepu Town, Ningbo Petrochemical ETD", "marker_size": 10}]}, {"lat": 29.9823, "lng": 121.7834, "location": "Ningbo", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Ningbo ZRCC Lyondell Chemical Co Ltd", "location": "Ningbo", "capacity": 620, "maintenance": "없음", "is_current_maintenance": false, "lat": 29.9823, "lng": 121.7834, "has_future_maintenance": false, "precise_address": "Houhai Road, Zhenhai District Petrochemical Base", "marker_size": 24}, {"country": "CHINA (MAINLAND)", "company": "Ningbo ZRCC LyondellBasell New Material Co. Ltd.", "location": "Ningbo", "capacity": 600, "maintenance": "없음", "is_current_maintenance": false, "lat": 29.9823, "lng": 121.7834, "has_future_maintenance": false, "precise_address": "Houhai Road, Zhenhai District Petrochemical Base", "marker_size": 24}]}, {"lat": 22.9234, "lng": 116.2345, "location": "Jieyang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "CNPC/PDVSA Guangdong Petrochemical Co. Ltd.", "location": "Jieyang", "capacity": 800, "maintenance": "없음", "is_current_maintenance": false, "lat": 22.9234, "lng": 116.2345, "has_future_maintenance": false, "precise_address": "Danhanshen Petrochemical Base, Huilai County", "marker_size": 30}]}, {"lat": 46.6234, "lng": 125.0234, "location": "Daqing", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Daqing Petrochemical Company", "location": "Daqing", "capacity": 100, "maintenance": "없음", "is_current_maintenance": false, "lat": 46.6234, "lng": 125.0234, "has_future_maintenance": false, "precise_address": "Wolifun, Longfeng District, Sinopec Complex Area", "marker_size": 14}, {"country": "CHINA (MAINLAND)", "company": "Daqing Petrochemical Company", "location": "Daqing", "capacity": 125, "maintenance": "없음", "is_current_maintenance": false, "lat": 46.6234, "lng": 125.0234, "has_future_maintenance": false, "precise_address": "Wolifun, Longfeng District, Sinopec Complex Area", "marker_size": 14}]}, {"lat": 23.94895, "lng": 117.57005000000001, "location": "Zhangzhou", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": true, "companies": [{"country": "CHINA (MAINLAND)", "company": "Fujian Gulei Petrochemical Co Ltd", "location": "Zhangzhou", "capacity": 600, "maintenance": "3월, 4월", "is_current_maintenance": false, "lat": 23.9456, "lng": 117.5678, "has_future_maintenance": true, "precise_address": "Gulei Avenue, Gulei Port Economic Development Zone", "marker_size": 24}, {"country": "CHINA (MAINLAND)", "company": "Fujian Haiquan Chemical Co., Ltd", "location": "Zhangzhou", "capacity": 226, "maintenance": "없음", "is_current_maintenance": false, "lat": 23.9523, "lng": 117.5723, "has_future_maintenance": false, "precise_address": "Lanhai Road, Gulei Port Economic Development Zone", "marker_size": 14}]}, {"lat": 21.66, "lng": 110.92, "location": "Maoming", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": true, "companies": [{"country": "CHINA (MAINLAND)", "company": "Guangdong Xinhuayue Petrochemical Group Co., Ltd.", "location": "Maoming", "capacity": 30, "maintenance": "11월, 12월", "is_current_maintenance": false, "lat": 21.66, "lng": 110.92, "has_future_maintenance": true, "marker_size": 10}]}, {"lat": 35.29, "lng": 115.09, "location": "Dongming", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Guoen Chemical (Dongming) Co., Ltd.", "location": "Dongming", "capacity": 150, "maintenance": "없음", "is_current_maintenance": false, "lat": 35.29, "lng": 115.09, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 39.2345, "lng": 121.9123, "location": "Dalian", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Hengli Petrochemical (Dalian) Co., Ltd.", "location": "Dalian", "capacity": 720, "maintenance": "없음", "is_current_maintenance": false, "lat": 39.2345, "lng": 121.9123, "has_future_maintenance": false, "precise_address": "Hengli Road, Changxing Island Economic Zone", "marker_size": 30}]}, {"lat": 36.8234, "lng": 119.2345, "location": "Weifang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Hongrun Petrochemical (Weifang) Co Ltd", "location": "Weifang", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.8234, "lng": 119.2345, "has_future_maintenance": false, "precise_address": "No. 001, Binhai Road, Weifang Binhai ETDZ", "marker_size": 14}]}, {"lat": 36.06, "lng": 103.83, "location": "Lanzhou", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Lanzhou Huifeng Petrochemical Co., Ltd.", "location": "Lanzhou", "capacity": 25, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.06, "lng": 103.83, "has_future_maintenance": false, "marker_size": 10}, {"country": "CHINA (MAINLAND)", "company": "PetroChina Lanzhou Petrochemical Co", "location": "Lanzhou", "capacity": 60, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.06, "lng": 103.83, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 37.5234, "lng": 118.6789, "location": "Dongying", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Lihuayi Lijin Refining and Chemical Co Ltd", "location": "Dongying", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.5234, "lng": 118.6789, "has_future_maintenance": false, "precise_address": "Lijin Binhai Economic Zone, Phase 2 Industrial Sector", "marker_size": 10}, {"country": "CHINA (MAINLAND)", "company": "Lihuayi Lijin Refining and Chemical Co Ltd", "location": "Dongying", "capacity": 720, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.5234, "lng": 118.6789, "has_future_maintenance": false, "precise_address": "Lijin Binhai Economic Zone, Phase 2 Industrial Sector", "marker_size": 30}]}, {"lat": 37.43, "lng": 118.67, "location": "Dongying", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Shandong Huaxing Petrochemical Group Co Ltd", "location": "Dongying", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.43, "lng": 118.67, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 37.4823, "lng": 118.7923, "location": "Dongying", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Zhenhua Petrochemical Co., Ltd.", "location": "Dongying", "capacity": 503, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.4823, "lng": 118.7923, "has_future_maintenance": false, "precise_address": "Dongying Port Economic Zone, Coastal Highway Sector", "marker_size": 24}]}, {"lat": 31.8567, "lng": 120.0234, "location": "Changzhou", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "New Solar Technology Group Co., Ltd.", "location": "Changzhou", "capacity": 250, "maintenance": "없음", "is_current_maintenance": false, "lat": 31.8567, "lng": 120.0234, "has_future_maintenance": false, "precise_address": "Binjiang 1st Road, Changzhou Binjiang Economic Development Zone", "marker_size": 14}, {"country": "CHINA (MAINLAND)", "company": "New Solar Technology Group Co., Ltd.", "location": "Changzhou", "capacity": 300, "maintenance": "없음", "is_current_maintenance": false, "lat": 31.8567, "lng": 120.0234, "has_future_maintenance": false, "precise_address": "Binjiang 1st Road, Changzhou Binjiang Economic Development Zone", "marker_size": 18}]}, {"lat": 41.88, "lng": 123.92, "location": "Fushun", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "PetroChina Fushun Petrochemical Co", "location": "Fushun", "capacity": 60, "maintenance": "없음", "is_current_maintenance": false, "lat": 41.88, "lng": 123.92, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 21.95, "lng": 108.62, "location": "Qinzhou", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "PetroChina Guangxi Petrochemical Co Ltd", "location": "Qinzhou", "capacity": 35, "maintenance": "없음", "is_current_maintenance": false, "lat": 21.95, "lng": 108.62, "has_future_maintenance": false, "marker_size": 10}, {"country": "CHINA (MAINLAND)", "company": "PetroChina Guangxi Petrochemical Co Ltd", "location": "Qinzhou", "capacity": 302, "maintenance": "없음", "is_current_maintenance": false, "lat": 21.95, "lng": 108.62, "has_future_maintenance": false, "marker_size": 18}]}, {"lat": 38.7, "lng": 116.09, "location": "Renqiu", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "PetroChina Huabei Petrochemical Co", "location": "Renqiu", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 38.7, "lng": 116.09, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 43.9123, "lng": 126.5234, "location": "Jilin City", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "PetroChina Jilin Petrochemical Co", "location": "Jilin City", "capacity": 600, "maintenance": "없음", "is_current_maintenance": false, "lat": 43.9123, "lng": 126.5234, "has_future_maintenance": false, "precise_address": "No.98 Zhengzhou Road, Longtan District", "marker_size": 24}, {"country": "CHINA (MAINLAND)", "company": "PetroChina Jilin Petrochemical Co", "location": "Jilin City", "capacity": 320, "maintenance": "없음", "is_current_maintenance": false, "lat": 43.9123, "lng": 126.5234, "has_future_maintenance": false, "precise_address": "No.98 Zhengzhou Road, Longtan District", "marker_size": 18}]}, {"lat": 40.71, "lng": 120.84, "location": "Huludao", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "PetroChina Jinxi Petrochemical Co", "location": "Huludao", "capacity": 60, "maintenance": "없음", "is_current_maintenance": false, "lat": 40.71, "lng": 120.84, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 41.12, "lng": 121.14, "location": "Jinzhou", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "PetroChina Jinzhou Petrochemical Co", "location": "Jinzhou", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 41.12, "lng": 121.14, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 35.9234, "lng": 119.8567, "location": "Qingdao", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Qingdao Haiwan Chemical Co., Ltd.", "location": "Qingdao", "capacity": 500, "maintenance": "없음", "is_current_maintenance": false, "lat": 35.9234, "lng": 119.8567, "has_future_maintenance": false, "precise_address": "Port Road, Dongjiakou Port Economic Zone", "marker_size": 24}]}, {"lat": 36.07, "lng": 120.38, "location": "Qingdao", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Qingdao Refining and Chemical Co Ltd", "location": "Qingdao", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.07, "lng": 120.38, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 34.6723, "lng": 119.5234, "location": "Lianyungang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Satellite Chemical Co., Ltd.", "location": "Lianyungang", "capacity": 600, "maintenance": "없음", "is_current_maintenance": false, "lat": 34.6723, "lng": 119.5234, "has_future_maintenance": false, "precise_address": "Xuwei Avenue (North), Xuwei New District", "marker_size": 24}]}, {"lat": 34.6634, "lng": 119.5123, "location": "Lianyungang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Shenghong Petrochemical Co Ltd", "location": "Lianyungang", "capacity": 450, "maintenance": "없음", "is_current_maintenance": false, "lat": 34.6634, "lng": 119.5123, "has_future_maintenance": false, "precise_address": "Xuwei Avenue (South), Xuwei New District", "marker_size": 18}]}, {"lat": 36.59, "lng": 109.49, "location": "Yan'an", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Shaanxi Yanchang Petroleum (Group) Co., Ltd., Refinery & Chemical Company", "location": "Yan'an", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.59, "lng": 109.49, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 37.4234, "lng": 120.3567, "location": "Yantai", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Shandong Yulong Petrochemical Co Ltd", "location": "Yantai", "capacity": 500, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.4234, "lng": 120.3567, "has_future_maintenance": false, "precise_address": "Yulong Island Reclamation Area, Longkou", "marker_size": 24}]}, {"lat": 37.5123, "lng": 121.4234, "location": "Yantai", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Wanhua Chemical Group Co.,Ltd", "location": "Yantai", "capacity": 650, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.5123, "lng": 121.4234, "has_future_maintenance": false, "precise_address": "No. 59, Chongqing Road, Yantai ETDZ", "marker_size": 24}, {"country": "CHINA (MAINLAND)", "company": "Wanhua Chemical Group Co.,Ltd", "location": "Yantai", "capacity": 12, "maintenance": "없음", "is_current_maintenance": false, "lat": 37.5123, "lng": 121.4234, "has_future_maintenance": false, "precise_address": "No. 59, Chongqing Road, Yantai ETDZ", "marker_size": 10}]}, {"lat": 30.7456, "lng": 121.2678, "location": "Jinshan", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Shanghai SECCO Petrochemical Co Ltd", "location": "Jinshan", "capacity": 650, "maintenance": "없음", "is_current_maintenance": false, "lat": 30.7456, "lng": 121.2678, "has_future_maintenance": false, "precise_address": "No. 557, Muhua Road, Shanghai Chemical Industry Park", "marker_size": 24}]}, {"lat": 38.3, "lng": 116.84, "location": "Cangzhou", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Shengteng Technology Co., Ltd.", "location": "Cangzhou", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 38.3, "lng": 116.84, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 24.9234, "lng": 118.7123, "location": "Quanzhou", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinochem Quanzhou Petrochemical Co Ltd", "location": "Quanzhou", "capacity": 450, "maintenance": "없음", "is_current_maintenance": false, "lat": 24.9234, "lng": 118.7123, "has_future_maintenance": false, "precise_address": "Quangang Petrochemical Base, Sinopec/Sinochem Sector", "marker_size": 18}]}, {"lat": 30.5534, "lng": 117.0923, "location": "Anqing", "country": "CHINA (MAINLAND)", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Anqing Company", "location": "Anqing", "capacity": 100, "maintenance": "없음", "is_current_maintenance": false, "lat": 30.5534, "lng": 117.0923, "has_future_maintenance": false, "precise_address": "Wandong Road, Daguan District", "marker_size": 14}, {"country": "CHINA (MAINLAND)", "company": "Sinopec Anqing Company", "location": "Anqing", "capacity": 400, "maintenance": "없음", "is_current_maintenance": false, "lat": 30.5534, "lng": 117.0923, "has_future_maintenance": false, "precise_address": "Wandong Road, Daguan District", "marker_size": 18}]}, {"lat": 29.37, "lng": 113.09, "location": "Yueyang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Group Assets Management Corporation Baling Petrochemical Branch", "location": "Yueyang", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 29.37, "lng": 113.09, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 23.13, "lng": 113.26, "location": "Guangzhou", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": true, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Guangzhou Co", "location": "Guangzhou", "capacity": 80, "maintenance": "10월, 11월, 12월", "is_current_maintenance": false, "lat": 23.13, "lng": 113.26, "has_future_maintenance": true, "marker_size": 10}]}, {"lat": 19.7234, "lng": 109.1823, "location": "Yangpu", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Hainan Refining and Chemical Co Ltd", "location": "Yangpu", "capacity": 500, "maintenance": "없음", "is_current_maintenance": false, "lat": 19.7234, "lng": 109.1823, "has_future_maintenance": false, "marker_size": 24}]}, {"lat": 19.73, "lng": 109.18, "location": "Yangpu", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "SINOPEC Hainan Shihua Sunchem Chemicals Co., Ltd.", "location": "Yangpu", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 19.73, "lng": 109.18, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 31.03, "lng": 112.2, "location": "Jingmen", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Jingmen Co", "location": "Jingmen", "capacity": 80, "maintenance": "없음", "is_current_maintenance": false, "lat": 31.03, "lng": 112.2, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 32.1234, "lng": 118.8567, "location": "Nanjing", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Jinling Co", "location": "Nanjing", "capacity": 60, "maintenance": "없음", "is_current_maintenance": false, "lat": 32.1234, "lng": 118.8567, "has_future_maintenance": false, "precise_address": "No. 388, Ganjiaxiang, Qixia District", "marker_size": 10}]}, {"lat": 32.06, "lng": 118.8, "location": "Nanjing", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Various_China Facilities", "location": "Nanjing", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 32.06, "lng": 118.8, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 34.62, "lng": 112.45, "location": "Luoyang", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec Luoyang Co", "location": "Luoyang", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 34.62, "lng": 112.45, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 39.0234, "lng": 117.7823, "location": "Tianjin", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Sinopec SABIC Tianjin Petrochemical Co Ltd", "location": "Tianjin", "capacity": 35, "maintenance": "1월, 2월, 12월", "is_current_maintenance": true, "lat": 39.0234, "lng": 117.7823, "has_future_maintenance": false, "precise_address": "Nangang 3rd St, Nangang Industrial Zone", "marker_size": 10}]}, {"lat": 32.1923, "lng": 119.9234, "location": "Taixing", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "SP Chemicals (Taixing) Co., Ltd.", "location": "Taixing", "capacity": 320, "maintenance": "없음", "is_current_maintenance": false, "lat": 32.1923, "lng": 119.9234, "has_future_maintenance": false, "precise_address": "Binjiang North Road, Taixing Economic Development Zone", "marker_size": 18}]}, {"lat": 39.2234, "lng": 118.4567, "location": "Tangshan", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Tangshan Risun Chemical Co Ltd", "location": "Tangshan", "capacity": 300, "maintenance": "없음", "is_current_maintenance": false, "lat": 39.2234, "lng": 118.4567, "has_future_maintenance": false, "precise_address": "Caofeidian 5th Road, Caofeidian Industrial Zone", "marker_size": 18}]}, {"lat": 38.9567, "lng": 117.7234, "location": "Binhai New Area", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Tianjin Bohua Chemical Development Co Ltd", "location": "Binhai New Area", "capacity": 450, "maintenance": "없음", "is_current_maintenance": false, "lat": 38.9567, "lng": 117.7234, "has_future_maintenance": false, "precise_address": "Nangang 1st St, Nangang Industrial Zone", "marker_size": 18}]}, {"lat": 39.0123, "lng": 117.7945, "location": "Binhai New Area", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Tianjin Dagu Chemical Co Ltd", "location": "Binhai New Area", "capacity": 500, "maintenance": "2월, 3월, 4월", "is_current_maintenance": true, "lat": 39.0123, "lng": 117.7945, "has_future_maintenance": false, "precise_address": "No. 111, Bohai Road, Lingang Economic Area", "marker_size": 24}]}, {"lat": 30.1234, "lng": 122.4567, "location": "Zhoushan", "country": "CHINA (MAINLAND)", "cluster_size": 3, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Zhejiang Petroleum and Chemical Co Ltd", "location": "Zhoushan", "capacity": 1200, "maintenance": "없음", "is_current_maintenance": false, "lat": 30.1234, "lng": 122.4567, "has_future_maintenance": false, "precise_address": "Yushan Island Base, Daishan County", "marker_size": 30}, {"country": "CHINA (MAINLAND)", "company": "Zhejiang Petroleum and Chemical Co Ltd", "location": "Zhoushan", "capacity": 600, "maintenance": "없음", "is_current_maintenance": false, "lat": 30.1234, "lng": 122.4567, "has_future_maintenance": false, "precise_address": "Yushan Island Base, Daishan County", "marker_size": 24}, {"country": "CHINA (MAINLAND)", "company": "Zhejiang Petroleum and Chemical Co Ltd", "location": "Zhoushan", "capacity": 600, "maintenance": "없음", "is_current_maintenance": false, "lat": 30.1234, "lng": 122.4567, "has_future_maintenance": false, "precise_address": "Yushan Island Base, Daishan County", "marker_size": 24}]}, {"lat": 36.7923, "lng": 118.1234, "location": "Zibo", "country": "CHINA (MAINLAND)", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "CHINA (MAINLAND)", "company": "Zibo Juncheng Chemical Co., Ltd.", "location": "Zibo", "capacity": 500, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.7923, "lng": 118.1234, "has_future_maintenance": false, "marker_size": 24}]}, {"lat": 34.52, "lng": 133.73, "location": "Mizushima", "country": "JAPAN", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "JAPAN", "company": "Asahi Kasei Corp", "location": "Mizushima", "capacity": 390, "maintenance": "없음", "is_current_maintenance": false, "lat": 34.52, "lng": 133.73, "has_future_maintenance": false, "marker_size": 18}]}, {"lat": 35.5, "lng": 140.12, "location": "Ichihara", "country": "JAPAN", "cluster_size": 3, "has_future_maintenance": true, "companies": [{"country": "JAPAN", "company": "Denka Co Ltd", "location": "Ichihara", "capacity": 270, "maintenance": "6월, 7월, 8월", "is_current_maintenance": false, "lat": 35.5, "lng": 140.12, "has_future_maintenance": true, "marker_size": 14}, {"country": "JAPAN", "company": "Idemitsu Kosan Co., Ltd", "location": "Ichihara", "capacity": 210, "maintenance": "없음", "is_current_maintenance": false, "lat": 35.5, "lng": 140.12, "has_future_maintenance": false, "marker_size": 14}, {"country": "JAPAN", "company": "Toyo Styrene Co., Ltd.", "location": "Ichihara", "capacity": 2, "maintenance": "없음", "is_current_maintenance": false, "lat": 35.5, "lng": 140.12, "has_future_maintenance": false, "marker_size": 10}]}, {"lat": 34.06, "lng": 131.81, "location": "Shunan", "country": "JAPAN", "cluster_size": 2, "has_future_maintenance": true, "companies": [{"country": "JAPAN", "company": "Idemitsu Kosan Co., Ltd", "location": "Shunan", "capacity": 210, "maintenance": "8월, 9월, 10월", "is_current_maintenance": false, "lat": 34.06, "lng": 131.81, "has_future_maintenance": true, "marker_size": 14}, {"country": "JAPAN", "company": "Idemitsu Kosan Co., Ltd", "location": "Shunan", "capacity": 120, "maintenance": "없음", "is_current_maintenance": false, "lat": 34.06, "lng": 131.81, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 33.24, "lng": 131.61, "location": "Oita", "country": "JAPAN", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "JAPAN", "company": "NS Styrene Monomer Co., Ltd.", "location": "Oita", "capacity": 190, "maintenance": "없음", "is_current_maintenance": false, "lat": 33.24, "lng": 131.61, "has_future_maintenance": false, "marker_size": 14}, {"country": "JAPAN", "company": "NS Styrene Monomer Co., Ltd.", "location": "Oita", "capacity": 232, "maintenance": "없음", "is_current_maintenance": false, "lat": 33.24, "lng": 131.61, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 36.8934, "lng": 126.3845, "location": "Seosan", "country": "KOREA, SOUTH", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "KOREA, SOUTH", "company": "Hanwha TotalEnergies Petrochemical Co Ltd", "location": "Seosan", "capacity": 400, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.8934, "lng": 126.3845, "has_future_maintenance": false, "marker_size": 18}, {"country": "KOREA, SOUTH", "company": "Hanwha TotalEnergies Petrochemical Co Ltd", "location": "Seosan", "capacity": 650, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.8934, "lng": 126.3845, "has_future_maintenance": false, "marker_size": 24}]}, {"lat": 36.8756, "lng": 126.3923, "location": "Seosan", "country": "KOREA, SOUTH", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "KOREA, SOUTH", "company": "Lotte Chemical Corporation", "location": "Seosan", "capacity": 580, "maintenance": "없음", "is_current_maintenance": false, "lat": 36.8756, "lng": 126.3923, "has_future_maintenance": false, "marker_size": 24}]}, {"lat": 35.54, "lng": 129.31, "location": "Ulsan", "country": "KOREA, SOUTH", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "KOREA, SOUTH", "company": "SK Picglobal Co., Ltd.", "location": "Ulsan", "capacity": 400, "maintenance": "없음", "is_current_maintenance": false, "lat": 35.54, "lng": 129.31, "has_future_maintenance": false, "marker_size": 18}]}, {"lat": 34.76, "lng": 127.66, "location": "Yeosu", "country": "KOREA, SOUTH", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"country": "KOREA, SOUTH", "company": "YEOCHUN NCC Co Ltd", "location": "Yeosu", "capacity": 346, "maintenance": "없음", "is_current_maintenance": false, "lat": 34.76, "lng": 127.66, "has_future_maintenance": false, "marker_size": 18}]}, {"lat": 23.782300000000003, "lng": 120.2134, "location": "Mailiao", "country": "TAIWAN", "cluster_size": 3, "has_future_maintenance": true, "companies": [{"country": "TAIWAN", "company": "Formosa Chemical & Fiber Corp", "location": "Mailiao", "capacity": 250, "maintenance": "1월, 6월, 11월", "is_current_maintenance": false, "lat": 23.7823, "lng": 120.2134, "has_future_maintenance": true, "marker_size": 14}, {"country": "TAIWAN", "company": "Formosa Chemical & Fiber Corp", "location": "Mailiao", "capacity": 350, "maintenance": "없음", "is_current_maintenance": false, "lat": 23.7823, "lng": 120.2134, "has_future_maintenance": false, "marker_size": 18}, {"country": "TAIWAN", "company": "Formosa Chemical & Fiber Corp", "location": "Mailiao", "capacity": 720, "maintenance": "없음", "is_current_maintenance": false, "lat": 23.7823, "lng": 120.2134, "has_future_maintenance": false, "marker_size": 30}]}, {"lat": 22.77, "lng": 120.36, "location": "Ta-She District", "country": "TAIWAN", "cluster_size": 2, "has_future_maintenance": false, "companies": [{"country": "TAIWAN", "company": "Grand Pacific Petrochemical Corporation", "location": "Ta-She District", "capacity": 240, "maintenance": "없음", "is_current_maintenance": false, "lat": 22.77, "lng": 120.36, "has_future_maintenance": false, "marker_size": 14}, {"country": "TAIWAN", "company": "Grand Pacific Petrochemical Corporation", "location": "Ta-She District", "capacity": 130, "maintenance": "없음", "is_current_maintenance": false, "lat": 22.77, "lng": 120.36, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 22.49, "lng": 120.4, "location": "Lin Yuan District", "country": "TAIWAN", "cluster_size": 2, "has_future_maintenance": true, "companies": [{"country": "TAIWAN", "company": "Taiwan Styrene Monomer Corporation", "location": "Lin Yuan District", "capacity": 180, "maintenance": "10월", "is_current_maintenance": false, "lat": 22.49, "lng": 120.4, "has_future_maintenance": true, "marker_size": 14}, {"country": "TAIWAN", "company": "Taiwan Styrene Monomer Corporation", "location": "Lin Yuan District", "capacity": 160, "maintenance": "없음", "is_current_maintenance": false, "lat": 22.49, "lng": 120.4, "has_future_maintenance": false, "marker_size": 14}]}, {"lat": 35.5234, "lng": 139.6923, "location": "Kawasaki", "country": "JAPAN", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Asahi Kasei Corp", "location": "Kawasaki", "country": "JAPAN", "capacity": 280, "lat": 35.5234, "lng": 139.6923, "address": "Ukushimacho, Kawasaki-ku, Kanagawa", "maintenance": "없음", "marker_size": 14, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 34.4856, "lng": 133.7123, "location": "Mizushima", "country": "JAPAN", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Asahi Kasei Corp", "location": "Mizushima", "country": "JAPAN", "capacity": 450, "lat": 34.4856, "lng": 133.7123, "address": "Mizushima Kaigandori, Kurashiki, Okayama", "maintenance": "없음", "marker_size": 18, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": -6.0234, "lng": 106.1234, "location": "Serang", "country": "INDONESIA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "PT Styrindo Mono", "location": "Serang", "country": "INDONESIA", "capacity": 150, "lat": -6.0234, "lng": 106.1234, "address": "Bojonegara, Serang, Banten", "maintenance": "없음", "marker_size": 14, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 1.2634, "lng": 103.7123, "location": "Jurong Island", "country": "SINGAPORE", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Aster / Shell", "location": "Jurong Island", "country": "SINGAPORE", "capacity": 800, "lat": 1.2634, "lng": 103.7123, "address": "Sakra/Seraya Sector, Jurong Island", "maintenance": "없음", "marker_size": 30, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 12.6523, "lng": 101.1834, "location": "Rayong", "country": "THAILAND", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "IRPC / Siam Styrene", "location": "Rayong", "country": "THAILAND", "capacity": 500, "lat": 12.6523, "lng": 101.1834, "address": "Map Ta Phut Industrial Estate", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 30.0523, "lng": -90.8456, "location": "St. James", "country": "USA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Americas Styrenics", "location": "St. James", "country": "USA", "capacity": 900, "lat": 30.0523, "lng": -90.8456, "address": "Hwy 18, St. James, Louisiana", "maintenance": "없음", "marker_size": 30, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 30.1823, "lng": -91.0234, "location": "Carville", "country": "USA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Cos-Mar (Lyondell/Sabic)", "location": "Carville", "country": "USA", "capacity": 680, "lat": 30.1823, "lng": -91.0234, "address": "Hwy 75, Carville, Louisiana", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 29.6534, "lng": -95.1523, "location": "Pasadena", "country": "USA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "INEOS Styrolution", "location": "Pasadena", "country": "USA", "capacity": 650, "lat": 29.6534, "lng": -95.1523, "address": "Bayport Industrial District", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 29.3834, "lng": -94.9123, "location": "Texas City", "country": "USA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "INEOS Styrolution", "location": "Texas City", "country": "USA", "capacity": 590, "lat": 29.3834, "lng": -94.9123, "address": "5th Ave South, Texas City", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 29.7923, "lng": -95.1234, "location": "Channelview", "country": "USA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "PO JV (LBI/Covestro)", "location": "Channelview", "country": "USA", "capacity": 520, "lat": 29.7923, "lng": -95.1234, "address": "Sheldon Rd, Channelview", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 53.7123, "lng": -113.2456, "location": "Ft. Saskatchewan", "country": "CANADA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Shell Chemicals", "location": "Ft. Saskatchewan", "country": "CANADA", "capacity": 300, "lat": 53.7123, "lng": -113.2456, "address": "Scotford Complex", "maintenance": "없음", "marker_size": 18, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": -23.8523, "lng": -46.4234, "location": "Triunfo", "country": "BRAZIL", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "CBE / Videolar-Innova", "location": "Triunfo", "country": "BRAZIL", "capacity": 340, "lat": -23.8523, "lng": -46.4234, "address": "Polo Petroquimico", "maintenance": "없음", "marker_size": 18, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 51.2923, "lng": 4.3234, "location": "Antwerp", "country": "BELGIUM", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "INEOS Styrolution", "location": "Antwerp", "country": "BELGIUM", "capacity": 600, "lat": 51.2923, "lng": 4.3234, "address": "Scheldelaan, Port of Antwerp", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 49.5134, "lng": 0.2234, "location": "Gonfreville", "country": "FRANCE", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "TotalEnergies", "location": "Gonfreville", "country": "FRANCE", "capacity": 500, "lat": 49.5134, "lng": 0.2234, "address": "Plate-forme de Normandie", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 49.4823, "lng": 8.4234, "location": "Ludwigshafen", "country": "GERMANY", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "BASF SE", "location": "Ludwigshafen", "country": "GERMANY", "capacity": 900, "lat": 49.4823, "lng": 8.4234, "address": "Carl-Bosch-Straße", "maintenance": "없음", "marker_size": 30, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 45.1623, "lng": 10.7834, "location": "Mantova", "country": "ITALY", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Eni / Versalis", "location": "Mantova", "country": "ITALY", "capacity": 200, "lat": 45.1623, "lng": 10.7834, "address": "Via G. Taliercio", "maintenance": "없음", "marker_size": 14, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 51.6823, "lng": 4.6234, "location": "Moerdijk", "country": "NETHERLANDS", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Shell / Ellba", "location": "Moerdijk", "country": "NETHERLANDS", "capacity": 450, "lat": 51.6823, "lng": 4.6234, "address": "Ceresweg, Port of Moerdijk", "maintenance": "없음", "marker_size": 18, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 41.1523, "lng": 1.2434, "location": "La Pobla", "country": "SPAIN", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Repsol Quimica", "location": "La Pobla", "country": "SPAIN", "capacity": 500, "lat": 41.1523, "lng": 1.2434, "address": "Tarragona Petrochemical Complex", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 50.0334, "lng": 19.2134, "location": "Oswiecim", "country": "POLAND", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Synthos", "location": "Oswiecim", "country": "POLAND", "capacity": 110, "lat": 50.0334, "lng": 19.2134, "address": "ul. Chemików", "maintenance": "없음", "marker_size": 14, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 50.2423, "lng": 14.3134, "location": "Kralupy", "country": "CZECH REPUBLIC", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Synthos", "location": "Kralupy", "country": "CZECH REPUBLIC", "capacity": 135, "lat": 50.2423, "lng": 14.3134, "address": "O. Wichterleho", "maintenance": "없음", "marker_size": 14, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 27.0134, "lng": 49.5823, "location": "Al Jubail", "country": "SAUDI ARABIA", "cluster_size": 1, "has_future_maintenance": true, "companies": [{"company": "Petrokemya / JCPA", "location": "Al Jubail", "country": "SAUDI ARABIA", "capacity": 1120, "lat": 27.0134, "lng": 49.5823, "address": "Jubail Industrial City", "maintenance": "3월", "marker_size": 30, "is_current_maintenance": false, "has_future_maintenance": true}]}, {"lat": 29.0923, "lng": 48.1234, "location": "Shuaiba", "country": "KUWAIT", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Kuwait Styrene", "location": "Shuaiba", "country": "KUWAIT", "capacity": 525, "lat": 29.0923, "lng": 48.1234, "address": "Shuaiba Industrial Area", "maintenance": "2월", "marker_size": 24, "is_current_maintenance": true, "has_future_maintenance": false}]}, {"lat": 27.1823, "lng": 52.6234, "location": "Asaluyeh", "country": "IRAN", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Pars Petrochemical", "location": "Asaluyeh", "country": "IRAN", "capacity": 600, "lat": 27.1823, "lng": 52.6234, "address": "Pars Special Economic Energy Zone", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 38.0823, "lng": 46.2923, "location": "Tabriz", "country": "IRAN", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Tabriz Petrochemical", "location": "Tabriz", "country": "IRAN", "capacity": 300, "lat": 38.0823, "lng": 46.2923, "address": "Tabriz Petrochemical Complex", "maintenance": "없음", "marker_size": 18, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 55.6323, "lng": 51.8234, "location": "Nizhnekamsk", "country": "RUSSIA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Nizhnekamskneftekhim", "location": "Nizhnekamsk", "country": "RUSSIA", "capacity": 650, "lat": 55.6323, "lng": 51.8234, "address": "Promzona, Nizhnekamsk, Tatarstan", "maintenance": "없음", "marker_size": 24, "is_current_maintenance": false, "has_future_maintenance": false}]}, {"lat": 58.0134, "lng": 56.2834, "location": "Perm", "country": "RUSSIA", "cluster_size": 1, "has_future_maintenance": false, "companies": [{"company": "Sibur-Khimprom", "location": "Perm", "country": "RUSSIA", "capacity": 160, "lat": 58.0134, "lng": 56.2834, "address": "Promyshlennaya St, Perm", "maintenance": "없음", "marker_size": 14, "is_current_maintenance": false, "has_future_maintenance": false}]}];
         initMap();
         
         function initMap() {
-            // 지도 초기화
             map = L.map('map');
             
-            // 지역별 색상
             function getRegionColor(country) {
                 const regionMap = {
-                    'CHINA (MAINLAND)': '#FF6B6B',
-                    'KOREA, SOUTH': '#FF6B6B',
-                    'JAPAN': '#FF6B6B',
-                    'TAIWAN': '#FF6B6B',
-                    'SINGAPORE': '#FF6B6B',
-                    'INDONESIA': '#FF6B6B',
-                    'THAILAND': '#FF6B6B',
-                    'USA': '#95E1D3',
-                    'CANADA': '#95E1D3',
-                    'BRAZIL': '#95E1D3',
-                    'BELGIUM': '#4ECDC4',
-                    'FRANCE': '#4ECDC4',
-                    'GERMANY': '#4ECDC4',
-                    'ITALY': '#4ECDC4',
-                    'NETHERLANDS': '#4ECDC4',
-                    'SPAIN': '#4ECDC4',
-                    'POLAND': '#4ECDC4',
-                    'CZECH REPUBLIC': '#4ECDC4',
-                    'SAUDI ARABIA': '#FFB84D',
-                    'KUWAIT': '#FFB84D',
-                    'IRAN': '#FFB84D',
+                    'CHINA (MAINLAND)': '#FF6B6B', 'KOREA, SOUTH': '#FF6B6B', 'JAPAN': '#FF6B6B',
+                    'TAIWAN': '#FF6B6B', 'SINGAPORE': '#FF6B6B', 'INDONESIA': '#FF6B6B', 'THAILAND': '#FF6B6B',
+                    'USA': '#95E1D3', 'CANADA': '#95E1D3', 'BRAZIL': '#95E1D3',
+                    'BELGIUM': '#4ECDC4', 'FRANCE': '#4ECDC4', 'GERMANY': '#4ECDC4',
+                    'ITALY': '#4ECDC4', 'NETHERLANDS': '#4ECDC4', 'SPAIN': '#4ECDC4',
+                    'POLAND': '#4ECDC4', 'CZECH REPUBLIC': '#4ECDC4',
+                    'SAUDI ARABIA': '#FFB84D', 'KUWAIT': '#FFB84D', 'IRAN': '#FFB84D',
                     'RUSSIA': '#C7CEEA'
                 };
                 return regionMap[country] || '#95a5a6';
             }
             
-            // 타일 레이어
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
                 maxZoom: 19,
-                attribution: '© OpenStreetMap contributors © CARTO'
+                attribution: '© OpenStreetMap © CARTO'
             }).addTo(map);
             
-            let totalCompanies = 0;
-            let currentMaintenanceCount = 0;
-            let futureMaintenanceCount = 0;
-            let asiaCnt = 0, americasCnt = 0, europeCnt = 0, meCnt = 0, russiaCnt = 0;
-            let chinaCnt = 0, japanCnt = 0, koreaCnt = 0, taiwanCnt = 0, seaCnt = 0;
+            let stats = {
+                totalCompanies: 0,
+                totalCapacity: 0,
+                totalLoss: 0,
+                currentMaintCount: 0,
+                futureMaintCount: 0,
+                regions: {
+                    asia: { count: 0, capacity: 0 },
+                    americas: { count: 0, capacity: 0 },
+                    europe: { count: 0, capacity: 0 },
+                    middleeast: { count: 0, capacity: 0 },
+                    russia: { count: 0, capacity: 0 }
+                },
+                countries: {
+                    china: { count: 0, capacity: 0 },
+                    japan: { count: 0, capacity: 0 },
+                    korea: { count: 0, capacity: 0 },
+                    taiwan: { count: 0, capacity: 0 },
+                    sea: { count: 0, capacity: 0 }
+                },
+                europeCountries: {}
+            };
             
-            // 마커 추가
+            // 마커 추가 및 통계 계산
             clusters.forEach(cluster => {
-                const companies = cluster.companies;
-                totalCompanies += companies.length;
-                
-                companies.forEach(company => {
-                    // 지역별 카운트
-                    if (company.country === 'CHINA (MAINLAND)') { asiaCnt++; chinaCnt++; }
-                    else if (company.country === 'JAPAN') { asiaCnt++; japanCnt++; }
-                    else if (company.country === 'KOREA, SOUTH') { asiaCnt++; koreaCnt++; }
-                    else if (company.country === 'TAIWAN') { asiaCnt++; taiwanCnt++; }
-                    else if (['SINGAPORE', 'INDONESIA', 'THAILAND'].includes(company.country)) { asiaCnt++; seaCnt++; }
-                    else if (['USA', 'CANADA', 'BRAZIL'].includes(company.country)) americasCnt++;
-                    else if (['BELGIUM', 'FRANCE', 'GERMANY', 'ITALY', 'NETHERLANDS', 'SPAIN', 'POLAND', 'CZECH REPUBLIC'].includes(company.country)) europeCnt++;
-                    else if (['SAUDI ARABIA', 'KUWAIT', 'IRAN'].includes(company.country)) meCnt++;
-                    else if (company.country === 'RUSSIA') russiaCnt++;
+                cluster.companies.forEach(company => {
+                    stats.totalCompanies++;
                     
-                    // 정기보수 카운트 및 리스트
+                    const cap = company.capacity === 'N/A' || !company.capacity ? 0 : parseInt(company.capacity);
+                    stats.totalCapacity += cap;
+                    
+                    const country = company.country;
+                    
+                    // 지역별 통계
+                    if (['CHINA (MAINLAND)', 'KOREA, SOUTH', 'JAPAN', 'TAIWAN', 'SINGAPORE', 'INDONESIA', 'THAILAND'].includes(country)) {
+                        stats.regions.asia.count++;
+                        stats.regions.asia.capacity += cap;
+                        
+                        if (country === 'CHINA (MAINLAND)') { stats.countries.china.count++; stats.countries.china.capacity += cap; }
+                        else if (country === 'JAPAN') { stats.countries.japan.count++; stats.countries.japan.capacity += cap; }
+                        else if (country === 'KOREA, SOUTH') { stats.countries.korea.count++; stats.countries.korea.capacity += cap; }
+                        else if (country === 'TAIWAN') { stats.countries.taiwan.count++; stats.countries.taiwan.capacity += cap; }
+                        else { stats.countries.sea.count++; stats.countries.sea.capacity += cap; }
+                    }
+                    else if (['USA', 'CANADA', 'BRAZIL'].includes(country)) {
+                        stats.regions.americas.count++;
+                        stats.regions.americas.capacity += cap;
+                    }
+                    else if (['BELGIUM', 'FRANCE', 'GERMANY', 'ITALY', 'NETHERLANDS', 'SPAIN', 'POLAND', 'CZECH REPUBLIC'].includes(country)) {
+                        stats.regions.europe.count++;
+                        stats.regions.europe.capacity += cap;
+                        stats.europeCountries[country] = (stats.europeCountries[country] || 0) + cap;
+                    }
+                    else if (['SAUDI ARABIA', 'KUWAIT', 'IRAN'].includes(country)) {
+                        stats.regions.middleeast.count++;
+                        stats.regions.middleeast.capacity += cap;
+                    }
+                    else if (country === 'RUSSIA') {
+                        stats.regions.russia.count++;
+                        stats.regions.russia.capacity += cap;
+                    }
+                    
+                    // 정기보수 통계 및 LOSS 계산
+                    const maintenance = company.maintenance || '없음';
+                    if (maintenance !== '없음') {
+                        const months = [];
+                        for (let m in monthDays) {
+                            if (maintenance.includes(m)) months.push(m);
+                        }
+                        if (months.length > 0) {
+                            const totalDays = months.reduce((sum, m) => sum + monthDays[m], 0);
+                            const loss = (cap / 365) * totalDays;
+                            stats.totalLoss += loss;
+                        }
+                    }
+                    
                     if (company.is_current_maintenance) {
-                        currentMaintenanceCount++;
+                        stats.currentMaintCount++;
                         currentMaintenanceList.push({
                             company: company.company,
                             location: cluster.location,
                             lat: cluster.lat,
                             lng: cluster.lng,
-                            capacity: company.capacity
+                            capacity: cap
                         });
                     }
                     if (company.has_future_maintenance) {
-                        futureMaintenanceCount++;
+                        stats.futureMaintCount++;
                         futureMaintenanceList.push({
                             company: company.company,
                             location: cluster.location,
                             lat: cluster.lat,
                             lng: cluster.lng,
-                            capacity: company.capacity,
+                            capacity: cap,
                             maintenance: company.maintenance
                         });
                     }
                 });
                 
+                // 마커 생성 (기존 코드와 동일)
                 let color = getRegionColor(cluster.country);
                 let shape = 'pin';
+                const isCurrentMaintenance = cluster.companies.some(c => c.is_current_maintenance);
+                const isFutureMaintenance = cluster.companies.some(c => c.has_future_maintenance);
                 
-                // 현재 정기보수 중
-                const isCurrentMaintenance = companies.some(c => c.is_current_maintenance);
-                if (isCurrentMaintenance) {
-                    color = 'black';
-                }
+                if (isCurrentMaintenance) color = 'black';
+                if (isFutureMaintenance) { shape = 'triangle'; color = '#4169E1'; }
                 
-                // 미래 정기보수 예정
-                const isFutureMaintenance = companies.some(c => c.has_future_maintenance);
-                if (isFutureMaintenance) {
-                    shape = 'triangle';
-                    color = '#4169E1';
-                }
-                
-                const avgCapacity = companies.reduce((sum, c) => {
+                const avgCapacity = cluster.companies.reduce((sum, c) => {
                     const cap = c.capacity === 'N/A' ? 0 : parseInt(c.capacity);
                     return sum + cap;
-                }, 0) / companies.length;
+                }, 0) / cluster.companies.length;
                 
                 let markerSize = 18;
                 if (avgCapacity < 100) markerSize = 10;
@@ -519,18 +637,9 @@
                 else markerSize = 30;
                 
                 const pinHeight = markerSize * 1.3;
-                
-                let iconHtml = '';
-                if (shape === 'triangle') {
-                    iconHtml = `<svg width="${markerSize}" height="${pinHeight}" viewBox="0 0 100 120">
-                        <polygon points="50,10 10,110 90,110" fill="${color}" stroke="white" stroke-width="3"/>
-                    </svg>`;
-                } else {
-                    iconHtml = `<svg width="${markerSize}" height="${pinHeight}" viewBox="0 0 100 120">
-                        <path d="M50,10 C30,10 15,25 15,45 C15,65 50,110 50,110 C50,110 85,65 85,45 C85,25 70,10 50,10 Z" 
-                              fill="${color}" stroke="white" stroke-width="3"/>
-                    </svg>`;
-                }
+                let iconHtml = shape === 'triangle'
+                    ? `<svg width="${markerSize}" height="${pinHeight}" viewBox="0 0 100 120"><polygon points="50,10 10,110 90,110" fill="${color}" stroke="white" stroke-width="3"/></svg>`
+                    : `<svg width="${markerSize}" height="${pinHeight}" viewBox="0 0 100 120"><path d="M50,10 C30,10 15,25 15,45 C15,65 50,110 50,110 C50,110 85,65 85,45 C85,25 70,10 50,10 Z" fill="${color}" stroke="white" stroke-width="3"/></svg>`;
                 
                 const customIcon = L.divIcon({
                     className: 'custom-marker' + (isFutureMaintenance ? ' pulse-marker' : ''),
@@ -546,180 +655,191 @@
                 marker.isFutureMaintenance = isFutureMaintenance;
                 
                 let popupContent = `<div style="max-width: 300px;">`;
-                if (companies.length === 1) {
-                    const c = companies[0];
-                    popupContent += `
-                        <div class="company-name">${c.company}</div>
+                if (cluster.companies.length === 1) {
+                    const c = cluster.companies[0];
+                    popupContent += `<div class="company-name">${c.company}</div>
                         <div><strong>Location:</strong> ${c.location}, ${c.country}</div>
                         <div><strong>Capacity:</strong> ${c.capacity} kt/year</div>
-                        <div><strong>Maintenance:</strong> ${c.maintenance}</div>
-                    `;
+                        <div><strong>Maintenance:</strong> ${c.maintenance}</div>`;
                 } else {
-                    popupContent += `<div class="company-name">${cluster.location} (${companies.length} companies)</div>`;
-                    companies.forEach(c => {
-                        popupContent += `
-                            <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
-                                <div style="font-weight: 500;">${c.company}</div>
-                                <div style="font-size: 12px; color: #666;">
-                                    Capacity: ${c.capacity} kt | Maintenance: ${c.maintenance}
-                                </div>
-                            </div>
-                        `;
+                    popupContent += `<div class="company-name">${cluster.location} (${cluster.companies.length} companies)</div>`;
+                    cluster.companies.forEach(c => {
+                        popupContent += `<div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+                            <div style="font-weight: 500;">${c.company}</div>
+                            <div style="font-size: 12px; color: #666;">Capacity: ${c.capacity} kt | Maintenance: ${c.maintenance}</div>
+                        </div>`;
                     });
                 }
                 popupContent += `</div>`;
-                
                 marker.bindPopup(popupContent);
                 
                 let labelMarker;
-                marker.on('click', function(e) {
-                    if (labelMarker) {
-                        map.removeLayer(labelMarker);
-                    }
-                    
+                marker.on('click', function() {
+                    if (labelMarker) map.removeLayer(labelMarker);
                     const labelIcon = L.divIcon({
                         className: 'label-marker',
                         html: cluster.location,
                         iconSize: null,
                         iconAnchor: [0, pinHeight + 10]
                     });
-                    
                     labelMarker = L.marker([cluster.lat, cluster.lng], { icon: labelIcon, interactive: false }).addTo(map);
                 });
-                
                 marker.on('popupclose', function() {
-                    if (labelMarker) {
-                        map.removeLayer(labelMarker);
-                        labelMarker = null;
-                    }
+                    if (labelMarker) { map.removeLayer(labelMarker); labelMarker = null; }
                 });
                 
                 marker.addTo(map);
                 allMarkers.push(marker);
             });
             
-            // 통계 업데이트
-            document.getElementById('total-count').textContent = totalCompanies;
-            document.getElementById('current-maintenance-count').textContent = currentMaintenanceCount;
-            document.getElementById('future-maintenance-count').textContent = futureMaintenanceCount;
-            document.getElementById('asia-count').textContent = asiaCnt;
-            document.getElementById('americas-count').textContent = americasCnt;
-            document.getElementById('europe-count').textContent = europeCnt;
-            document.getElementById('me-count').textContent = meCnt;
-            document.getElementById('russia-count').textContent = russiaCnt;
-            document.getElementById('china-count').textContent = chinaCnt;
-            document.getElementById('japan-count').textContent = japanCnt;
-            document.getElementById('korea-count').textContent = koreaCnt;
-            document.getElementById('taiwan-count').textContent = taiwanCnt;
-            document.getElementById('sea-count').textContent = seaCnt;
+            // UI 업데이트
+            document.getElementById('total-count').textContent = stats.totalCompanies;
+            document.getElementById('total-capacity').textContent = stats.totalCapacity.toLocaleString();
+            const lossRate = (stats.totalLoss / stats.totalCapacity * 100).toFixed(2);
+            document.getElementById('loss-rate').textContent = lossRate;
+            document.getElementById('loss-detail').textContent = `Loss: ${Math.round(stats.totalLoss).toLocaleString()} kt`;
+            document.getElementById('current-maintenance-count').textContent = stats.currentMaintCount;
+            document.getElementById('future-maintenance-count').textContent = stats.futureMaintCount;
             
-            // Current Maintenance 리스트 생성
+            // 지역별
+            document.getElementById('asia-count').textContent = stats.regions.asia.count;
+            document.getElementById('asia-capacity').textContent = `${stats.regions.asia.capacity.toLocaleString()} kt/year`;
+            document.getElementById('americas-count').textContent = stats.regions.americas.count;
+            document.getElementById('americas-capacity').textContent = `${stats.regions.americas.capacity.toLocaleString()} kt/year`;
+            document.getElementById('europe-count').textContent = stats.regions.europe.count;
+            document.getElementById('europe-capacity').textContent = `${stats.regions.europe.capacity.toLocaleString()} kt/year`;
+            document.getElementById('me-count').textContent = stats.regions.middleeast.count;
+            document.getElementById('me-capacity').textContent = `${stats.regions.middleeast.capacity.toLocaleString()} kt/year`;
+            document.getElementById('russia-count').textContent = stats.regions.russia.count;
+            document.getElementById('russia-capacity').textContent = `${stats.regions.russia.capacity.toLocaleString()} kt/year`;
+            
+            // 아시아 국가별
+            document.getElementById('china-count').textContent = stats.countries.china.count;
+            document.getElementById('china-capacity').textContent = `${stats.countries.china.capacity.toLocaleString()} kt/year`;
+            document.getElementById('japan-count').textContent = stats.countries.japan.count;
+            document.getElementById('japan-capacity').textContent = `${stats.countries.japan.capacity.toLocaleString()} kt/year`;
+            document.getElementById('korea-count').textContent = stats.countries.korea.count;
+            document.getElementById('korea-capacity').textContent = `${stats.countries.korea.capacity.toLocaleString()} kt/year`;
+            document.getElementById('taiwan-count').textContent = stats.countries.taiwan.count;
+            document.getElementById('taiwan-capacity').textContent = `${stats.countries.taiwan.capacity.toLocaleString()} kt/year`;
+            document.getElementById('sea-count').textContent = stats.countries.sea.count;
+            document.getElementById('sea-capacity').textContent = `${stats.countries.sea.capacity.toLocaleString()} kt/year`;
+            
+            // 유럽 국가별 리스트 생성
+            const europeSubDiv = document.getElementById('europe-sub');
+            const europeCountries = [
+                { code: 'GERMANY', name: '🇩🇪 Germany', lat: 51, lng: 10, zoom: 6 },
+                { code: 'BELGIUM', name: '🇧🇪 Belgium', lat: 50.8, lng: 4.3, zoom: 8 },
+                { code: 'FRANCE', name: '🇫🇷 France', lat: 49.5, lng: 0.2, zoom: 7 },
+                { code: 'SPAIN', name: '🇪🇸 Spain', lat: 41.1, lng: 1.2, zoom: 7 },
+                { code: 'NETHERLANDS', name: '🇳🇱 Netherlands', lat: 51.7, lng: 4.6, zoom: 8 },
+                { code: 'ITALY', name: '🇮🇹 Italy', lat: 45.2, lng: 10.8, zoom: 8 },
+                { code: 'CZECH REPUBLIC', name: '🇨🇿 Czech Rep.', lat: 50.2, lng: 14.3, zoom: 8 },
+                { code: 'POLAND', name: '🇵🇱 Poland', lat: 50.0, lng: 19.2, zoom: 8 }
+            ];
+            
+            europeCountries.forEach(ec => {
+                const cap = stats.europeCountries[ec.code] || 0;
+                if (cap > 0) {
+                    const div = document.createElement('div');
+                    div.className = 'sub-item';
+                    div.onclick = () => map.flyTo([ec.lat, ec.lng], ec.zoom, { duration: 1.5 });
+                    div.innerHTML = `
+                        <div class="sub-item-name">${ec.name}</div>
+                        <div class="sub-item-detail">${cap.toLocaleString()} kt/year</div>
+                    `;
+                    europeSubDiv.appendChild(div);
+                }
+            });
+            
+            // 정기보수 리스트
             const currentSubDiv = document.getElementById('current-sub');
             currentMaintenanceList.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'sub-item';
                 div.onclick = () => flyToCompany(item.lat, item.lng);
                 div.innerHTML = `
-                    <div class="sub-item-name">⚫ ${item.company.substring(0, 30)}...</div>
+                    <div class="sub-item-name">⚫ ${item.company.substring(0, 28)}...</div>
                     <div class="sub-item-detail">${item.location} | ${item.capacity} kt</div>
                 `;
                 currentSubDiv.appendChild(div);
             });
             
-            // Future Maintenance 리스트 생성
             const futureSubDiv = document.getElementById('future-sub');
             futureMaintenanceList.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'sub-item';
                 div.onclick = () => flyToCompany(item.lat, item.lng);
                 div.innerHTML = `
-                    <div class="sub-item-name">🔵 ${item.company.substring(0, 30)}...</div>
+                    <div class="sub-item-name">🔵 ${item.company.substring(0, 28)}...</div>
                     <div class="sub-item-detail">${item.location} | ${item.maintenance}</div>
                 `;
                 futureSubDiv.appendChild(div);
             });
             
-            // 모든 마커가 보이도록 Fit Bounds
+            // Fit Bounds
             const bounds = L.latLngBounds(clusters.map(c => [c.lat, c.lng]));
             map.fitBounds(bounds, { padding: [50, 50] });
-            
-            console.log(`Total: ${totalCompanies} companies, ${clusters.length} markers`);
         }
         
-        // 하위 항목 토글
         function toggleSubItems(type) {
             const subDiv = document.getElementById(type + '-sub');
             const icon = document.getElementById(type + '-icon');
-            
             if (subDiv && icon) {
                 subDiv.classList.toggle('active');
                 icon.classList.toggle('expanded');
-            } else if (type !== 'current' && type !== 'future') {
+            } else {
                 flyToRegion(type);
             }
         }
         
-        // 지역별 이동
         function flyToRegion(region) {
-            const regionCenters = {
-                'asia': { lat: 35, lng: 110, zoom: 4 },
+            const centers = {
                 'americas': { lat: 40, lng: -95, zoom: 3 },
-                'europe': { lat: 50, lng: 10, zoom: 4 },
                 'middleeast': { lat: 27, lng: 50, zoom: 5 },
                 'russia': { lat: 56, lng: 54, zoom: 5 }
             };
-            
-            const center = regionCenters[region];
-            if (center) {
-                map.flyTo([center.lat, center.lng], center.zoom, { duration: 1.5 });
-            }
+            const c = centers[region];
+            if (c) map.flyTo([c.lat, c.lng], c.zoom, { duration: 1.5 });
         }
         
-        // 국가별 이동
         function flyToCountry(country) {
-            const countryCenters = {
+            const centers = {
                 'china': { lat: 35, lng: 115, zoom: 5 },
                 'japan': { lat: 36, lng: 138, zoom: 6 },
                 'korea': { lat: 36.5, lng: 127.5, zoom: 7 },
                 'taiwan': { lat: 24, lng: 121, zoom: 8 },
                 'sea': { lat: 5, lng: 110, zoom: 5 }
             };
-            
-            const center = countryCenters[country];
-            if (center) {
-                map.flyTo([center.lat, center.lng], center.zoom, { duration: 1.5 });
-            }
+            const c = centers[country];
+            if (c) map.flyTo([c.lat, c.lng], c.zoom, { duration: 1.5 });
         }
         
-        // 특정 업체로 이동
         function flyToCompany(lat, lng) {
             map.flyTo([lat, lng], 7, { duration: 1.5 });
-            
-            // 해당 위치의 마커 찾아서 팝업 열기
             setTimeout(() => {
-                allMarkers.forEach(marker => {
-                    const markerPos = marker.getLatLng();
-                    if (Math.abs(markerPos.lat - lat) < 0.01 && Math.abs(markerPos.lng - lng) < 0.01) {
-                        marker.openPopup();
+                allMarkers.forEach(m => {
+                    const pos = m.getLatLng();
+                    if (Math.abs(pos.lat - lat) < 0.01 && Math.abs(pos.lng - lng) < 0.01) {
+                        m.openPopup();
                     }
                 });
             }, 1600);
         }
         
-        // 정기보수 마커 전체 보기
         function showMaintenanceMarkers(type) {
-            let targetMarkers = [];
-            
-            if (type === 'current') {
-                targetMarkers = allMarkers.filter(m => m.isCurrentMaintenance);
-            } else if (type === 'future') {
-                targetMarkers = allMarkers.filter(m => m.isFutureMaintenance);
-            }
-            
+            const targetMarkers = allMarkers.filter(m => 
+                type === 'current' ? m.isCurrentMaintenance : m.isFutureMaintenance
+            );
             if (targetMarkers.length > 0) {
                 const bounds = L.latLngBounds(targetMarkers.map(m => m.getLatLng()));
                 map.fitBounds(bounds, { padding: [50, 50], maxZoom: 6 });
             }
+        }
+        
+        function resetMapView() {
+            const bounds = L.latLngBounds(clusters.map(c => [c.lat, c.lng]));
+            map.fitBounds(bounds, { padding: [50, 50] });
         }
     </script>
 </body>
