@@ -328,12 +328,21 @@
                 </div>
                 
                 <div class="capacity-box" style="background: #ff6b6b15;">
-                    <div class="capacity-title">Maintenance Loss Rate</div>
+                    <div class="capacity-title">Current Loss Rate (Feb)</div>
                     <div>
-                        <span class="capacity-value" id="loss-rate" style="color: #ff6b6b;">0</span>
+                        <span class="capacity-value" id="current-loss-rate" style="color: #ff6b6b;">0</span>
                         <span class="capacity-unit">%</span>
                     </div>
-                    <div class="stat-detail" id="loss-detail">Loss: 0 kt</div>
+                    <div class="stat-detail" id="current-loss-detail">Loss: 0 kt</div>
+                </div>
+                
+                <div class="capacity-box" style="background: #4169e115;">
+                    <div class="capacity-title">Total Loss Rate (2026)</div>
+                    <div>
+                        <span class="capacity-value" id="total-loss-rate" style="color: #4169e1;">0</span>
+                        <span class="capacity-unit">%</span>
+                    </div>
+                    <div class="stat-detail" id="total-loss-detail">Loss: 0 kt</div>
                 </div>
                 
                 <div class="stat-item" onclick="toggleSubItems('current')">
@@ -365,30 +374,30 @@
                             Asia
                             <span class="expand-icon" id="asia-icon">▼</span>
                         </div>
-                        <div class="stat-detail" id="asia-capacity">0 kt/year</div>
+                        <div class="stat-detail"><span id="asia-capacity">0 kt/year</span> (<span id="asia-pct">0%</span>)</div>
                     </div>
                     <span class="stat-number" id="asia-count">0</span>
                 </div>
                 <div class="sub-items" id="asia-sub">
                     <div class="sub-item" onclick="flyToCountry('china')">
                         <div class="sub-item-name">🇨🇳 China (<span id="china-count">0</span>)</div>
-                        <div class="sub-item-detail" id="china-capacity">0 kt/year</div>
+                        <div class="sub-item-detail"><span id="china-capacity">0 kt/year</span> (<span id="china-pct">0%</span>)</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('japan')">
                         <div class="sub-item-name">🇯🇵 Japan (<span id="japan-count">0</span>)</div>
-                        <div class="sub-item-detail" id="japan-capacity">0 kt/year</div>
+                        <div class="sub-item-detail"><span id="japan-capacity">0 kt/year</span> (<span id="japan-pct">0%</span>)</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('korea')">
                         <div class="sub-item-name">🇰🇷 Korea (<span id="korea-count">0</span>)</div>
-                        <div class="sub-item-detail" id="korea-capacity">0 kt/year</div>
+                        <div class="sub-item-detail"><span id="korea-capacity">0 kt/year</span> (<span id="korea-pct">0%</span>)</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('taiwan')">
                         <div class="sub-item-name">🇹🇼 Taiwan (<span id="taiwan-count">0</span>)</div>
-                        <div class="sub-item-detail" id="taiwan-capacity">0 kt/year</div>
+                        <div class="sub-item-detail"><span id="taiwan-capacity">0 kt/year</span> (<span id="taiwan-pct">0%</span>)</div>
                     </div>
                     <div class="sub-item" onclick="flyToCountry('sea')">
                         <div class="sub-item-name">🌏 SEA (<span id="sea-count">0</span>)</div>
-                        <div class="sub-item-detail" id="sea-capacity">0 kt/year</div>
+                        <div class="sub-item-detail"><span id="sea-capacity">0 kt/year</span> (<span id="sea-pct">0%</span>)</div>
                     </div>
                 </div>
                 
@@ -398,7 +407,7 @@
                             <span class="stat-color" style="background-color: #95E1D3;"></span>
                             Americas
                         </div>
-                        <div class="stat-detail" id="americas-capacity">0 kt/year</div>
+                        <div class="stat-detail"><span id="americas-capacity">0 kt/year</span> (<span id="americas-pct">0%</span>)</div>
                     </div>
                     <span class="stat-number" id="americas-count">0</span>
                 </div>
@@ -410,7 +419,7 @@
                             Europe
                             <span class="expand-icon" id="europe-icon">▼</span>
                         </div>
-                        <div class="stat-detail" id="europe-capacity">0 kt/year</div>
+                        <div class="stat-detail"><span id="europe-capacity">0 kt/year</span> (<span id="europe-pct">0%</span>)</div>
                     </div>
                     <span class="stat-number" id="europe-count">0</span>
                 </div>
@@ -422,7 +431,7 @@
                             <span class="stat-color" style="background-color: #FFB84D;"></span>
                             Middle East
                         </div>
-                        <div class="stat-detail" id="me-capacity">0 kt/year</div>
+                        <div class="stat-detail"><span id="me-capacity">0 kt/year</span> (<span id="me-pct">0%</span>)</div>
                     </div>
                     <span class="stat-number" id="me-count">0</span>
                 </div>
@@ -433,7 +442,7 @@
                             <span class="stat-color" style="background-color: #C7CEEA;"></span>
                             Russia
                         </div>
-                        <div class="stat-detail" id="russia-capacity">0 kt/year</div>
+                        <div class="stat-detail"><span id="russia-capacity">0 kt/year</span> (<span id="russia-pct">0%</span>)</div>
                     </div>
                     <span class="stat-number" id="russia-count">0</span>
                 </div>
@@ -520,6 +529,8 @@
                 totalCompanies: 0,
                 totalCapacity: 0,
                 totalLoss: 0,
+                currentLoss: 0,
+                futureLoss: 0,
                 currentMaintCount: 0,
                 futureMaintCount: 0,
                 regions: {
@@ -589,6 +600,14 @@
                             const totalDays = months.reduce((sum, m) => sum + monthDays[m], 0);
                             const loss = (cap / 365) * totalDays;
                             stats.totalLoss += loss;
+                            
+                            // Current vs Future 분리
+                            if (company.is_current_maintenance) {
+                                stats.currentLoss += loss;
+                            }
+                            if (company.has_future_maintenance) {
+                                stats.futureLoss += loss;
+                            }
                         }
                     }
                     
@@ -695,35 +714,61 @@
             // UI 업데이트
             document.getElementById('total-count').textContent = stats.totalCompanies;
             document.getElementById('total-capacity').textContent = stats.totalCapacity.toLocaleString();
-            const lossRate = (stats.totalLoss / stats.totalCapacity * 100).toFixed(2);
-            document.getElementById('loss-rate').textContent = lossRate;
-            document.getElementById('loss-detail').textContent = `Loss: ${Math.round(stats.totalLoss).toLocaleString()} kt`;
+            
+            // Current Loss Rate
+            const currentLossRate = (stats.currentLoss / stats.totalCapacity * 100).toFixed(2);
+            document.getElementById('current-loss-rate').textContent = currentLossRate;
+            document.getElementById('current-loss-detail').textContent = `Loss: ${Math.round(stats.currentLoss).toLocaleString()} kt`;
+            
+            // Total Loss Rate (2026)
+            const totalLossRate = (stats.totalLoss / stats.totalCapacity * 100).toFixed(2);
+            document.getElementById('total-loss-rate').textContent = totalLossRate;
+            document.getElementById('total-loss-detail').textContent = `Loss: ${Math.round(stats.totalLoss).toLocaleString()} kt`;
+            
             document.getElementById('current-maintenance-count').textContent = stats.currentMaintCount;
             document.getElementById('future-maintenance-count').textContent = stats.futureMaintCount;
             
             // 지역별
             document.getElementById('asia-count').textContent = stats.regions.asia.count;
             document.getElementById('asia-capacity').textContent = `${stats.regions.asia.capacity.toLocaleString()} kt/year`;
+            document.getElementById('asia-pct').textContent = `${(stats.regions.asia.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('americas-count').textContent = stats.regions.americas.count;
             document.getElementById('americas-capacity').textContent = `${stats.regions.americas.capacity.toLocaleString()} kt/year`;
+            document.getElementById('americas-pct').textContent = `${(stats.regions.americas.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('europe-count').textContent = stats.regions.europe.count;
             document.getElementById('europe-capacity').textContent = `${stats.regions.europe.capacity.toLocaleString()} kt/year`;
+            document.getElementById('europe-pct').textContent = `${(stats.regions.europe.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('me-count').textContent = stats.regions.middleeast.count;
             document.getElementById('me-capacity').textContent = `${stats.regions.middleeast.capacity.toLocaleString()} kt/year`;
+            document.getElementById('me-pct').textContent = `${(stats.regions.middleeast.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('russia-count').textContent = stats.regions.russia.count;
             document.getElementById('russia-capacity').textContent = `${stats.regions.russia.capacity.toLocaleString()} kt/year`;
+            document.getElementById('russia-pct').textContent = `${(stats.regions.russia.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
             
             // 아시아 국가별
             document.getElementById('china-count').textContent = stats.countries.china.count;
             document.getElementById('china-capacity').textContent = `${stats.countries.china.capacity.toLocaleString()} kt/year`;
+            document.getElementById('china-pct').textContent = `${(stats.countries.china.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('japan-count').textContent = stats.countries.japan.count;
             document.getElementById('japan-capacity').textContent = `${stats.countries.japan.capacity.toLocaleString()} kt/year`;
+            document.getElementById('japan-pct').textContent = `${(stats.countries.japan.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('korea-count').textContent = stats.countries.korea.count;
             document.getElementById('korea-capacity').textContent = `${stats.countries.korea.capacity.toLocaleString()} kt/year`;
+            document.getElementById('korea-pct').textContent = `${(stats.countries.korea.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('taiwan-count').textContent = stats.countries.taiwan.count;
             document.getElementById('taiwan-capacity').textContent = `${stats.countries.taiwan.capacity.toLocaleString()} kt/year`;
+            document.getElementById('taiwan-pct').textContent = `${(stats.countries.taiwan.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
+            
             document.getElementById('sea-count').textContent = stats.countries.sea.count;
             document.getElementById('sea-capacity').textContent = `${stats.countries.sea.capacity.toLocaleString()} kt/year`;
+            document.getElementById('sea-pct').textContent = `${(stats.countries.sea.capacity / stats.totalCapacity * 100).toFixed(1)}%`;
             
             // 유럽 국가별 리스트 생성
             const europeSubDiv = document.getElementById('europe-sub');
@@ -741,12 +786,13 @@
             europeCountries.forEach(ec => {
                 const cap = stats.europeCountries[ec.code] || 0;
                 if (cap > 0) {
+                    const pct = (cap / stats.totalCapacity * 100).toFixed(1);
                     const div = document.createElement('div');
                     div.className = 'sub-item';
                     div.onclick = () => map.flyTo([ec.lat, ec.lng], ec.zoom, { duration: 1.5 });
                     div.innerHTML = `
                         <div class="sub-item-name">${ec.name}</div>
-                        <div class="sub-item-detail">${cap.toLocaleString()} kt/year</div>
+                        <div class="sub-item-detail">${cap.toLocaleString()} kt/year (${pct}%)</div>
                     `;
                     europeSubDiv.appendChild(div);
                 }
